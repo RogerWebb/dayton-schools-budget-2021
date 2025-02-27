@@ -37,7 +37,10 @@ if __name__ == "__main__":
     args = ap.parse_args()
 
     dim_cols = ['Cost Center', 'Budget Orgn', 'Budget Unit', 'Account', 'Account Title']
-    amt_cols = ["2019-2020 Actual", "2020-2021 Actual",	"2021-2022 Budget", "2022-2023 Proposed"]
+    #amt_cols = ["2019-2020 Actual", "2020-2021 Actual",	"2021-2022 Budget", "2022-2023 Proposed"]
+    #amt_cols = ["2020-2021 Actual", "2021-2022 Actual", "2022-2023 Budget", "2023-2024 Proposed"]
+    amt_cols = ["2021-2022 Actual", "2022-2023 Actual", "2023-2024 Budget", "2024-2025 Proposed"]
+    rm_cols = ["2023-2024 FTE", "2024-2025 FTE", "2024-2025 Approved", "2024-2025 Adopted"]
     all_cols = dim_cols + amt_cols
 
     # Remove "$-" values (happens by default here) and split "Account" and "Budget Organization" columns
@@ -52,6 +55,9 @@ if __name__ == "__main__":
         out_cols = list(df.columns)
         for col in amt_cols:
             out_cols.remove(col)
+        for col in rm_cols:
+            out_cols.remove(col)
+
         out_cols += ['Budget Term','Budget Year', 'Cost Center Name','Amount']
 
         writer = csv.DictWriter(out_fp, fieldnames=out_cols)
@@ -60,6 +66,8 @@ if __name__ == "__main__":
         for row in df.to_dict('records'):
             out_row_base = row.copy()
             for col in amt_cols:
+                del out_row_base[col]
+            for col in rm_cols:
                 del out_row_base[col]
 
             for col in amt_cols:

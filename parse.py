@@ -22,7 +22,7 @@ if __name__ == "__main__":
     args = ap.parse_args()
 
     dim_cols = ['Cost Center', 'Budget Orgn', 'Budget Unit', 'Account', 'Account Title']
-    amt_cols = ["2019-2020 Actual", "2020-2021 Actual",	"2021-2022 Budget", "2022-2023 Proposed"]
+    amt_cols = ["2021-2022 Actual", "2022-2023 Actual", "2023-2024 Budget", "2024-2025 Proposed"]
     all_cols = dim_cols + amt_cols
 
     xls = pandas.ExcelFile(args.filename)
@@ -54,5 +54,5 @@ if __name__ == "__main__":
             #pprint(row)
             output.append(row)
 
-    pandas.DataFrame(output).to_csv("Budget_2022_Parsed.csv", index=False)
+    pandas.DataFrame(output).to_csv("Budget_2024_Parsed.csv", index=False)
 
